@@ -7,23 +7,23 @@ import com.github.cliftonlabs.json_simple.JsonObject;
 @Service
 public class DataService {
 
-  public String generarHash(String entrada, String clave, RetoEnum reto){
+  public String generarHash(DataDTO data){
     String banco = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     
-    for (int i = 0; i < clave.length(); i++) {
-        if(!banco.contains(String.valueOf(clave.charAt(i)))) {
+    for (int i = 0; i < data.getToken().length(); i++) {
+        if(!banco.contains(String.valueOf(data.getToken().charAt(i)))) {
             return "Caracter no permitido";
         }
     }
     
     String cadenaBase64 = "";
-    String entradaOriginal = entrada;
+    String entradaOriginal = data.getFichero();
     String cadenaCodificada = Base64.getEncoder().encodeToString(entradaOriginal.getBytes());
     
-    if(reto == RetoEnum.RETO1) {
-    cadenaBase64 = cadenaCodificada + clave;
-    }else if(reto == RetoEnum.RETO2){
-    cadenaBase64 = clave + cadenaCodificada;
+    if(data.getReto() == RetoEnum.RETO1) {
+    cadenaBase64 = cadenaCodificada + data.getToken();
+    }else if(data.getReto() == RetoEnum.RETO2){
+    cadenaBase64 = data.getToken() + cadenaCodificada;
     } else {
       return "Tipo de reto no permitido";
     }

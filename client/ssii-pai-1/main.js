@@ -1,4 +1,9 @@
-async function getData(body) {
+async function getData() {
+  const data = {
+    fichero: document.querySelector(".input-search").value,
+    token: document.querySelector(".input-token").value,
+    reto: document.querySelector(".input-challenge").value === 0 ? "RETO1" : "RETO2"
+  }
   const headers_ = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': 'http://localhost:5173/',
@@ -7,16 +12,17 @@ async function getData(body) {
   }
 
   const requestOptions = {
-    method: 'GET',
+    method: 'POST',
     headers: headers_,
-    body: (JSON.stringify(body))
+    body: JSON.stringify(data)
   }
 
   fetch('http://localhost:8080/data', requestOptions)
     .then(res => res.json())
     .then(data => {
+      console.log(requestOptions.body)
       console.log(data)
-      document.querySelector(".code").innerHTML = "Código Hash: " + data.hash;
+      document.querySelector(".code").innerHTML = "Código Hash: " + data;
     })
 }
 
@@ -140,7 +146,7 @@ function selectFirstResult() {
 
 function selectResult() {
   const value = inputElem.value;
-  const autocompleteValue = filteredResults[activeIndex].name.common;
+  const autocompleteValue = filteredResults[activeIndex];
   const activeItem = this.getItemAt(activeIndex);
   if (activeItem) {
    activeItem.classList.add('selected');
