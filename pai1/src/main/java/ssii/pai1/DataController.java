@@ -1,6 +1,8 @@
 package ssii.pai1;
 import com.github.cliftonlabs.json_simple.JsonObject;
 
+import java.io.IOException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("data")
+@RequestMapping()
 public class DataController {
 
   @Autowired
@@ -26,13 +28,13 @@ public class DataController {
   //   return json;
   // }
 
-  @PostMapping()
+  @PostMapping("/data")
   @CrossOrigin(origins = "http://localhost:5173")
-  public String getData(@RequestBody @Valid DataDTO data) {
+  public String getData(@RequestBody @Valid DataDTO data) throws IOException {
     return dataService.generarHash(data);
   }
 
-  @GetMapping("/all")
+  @GetMapping("data/all")
   @CrossOrigin(origins = "http://localhost:5173")
   public JsonObject getAll() {
     return dataService.getAll();

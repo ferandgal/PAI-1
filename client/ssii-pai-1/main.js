@@ -13,6 +13,7 @@ async function getData() {
 
   const requestOptions = {
     method: 'POST',
+    mode: 'no-cors',
     headers: headers_,
     body: JSON.stringify(data)
   }
