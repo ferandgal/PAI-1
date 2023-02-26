@@ -2,25 +2,26 @@ async function getData() {
   const data = {
     fichero: document.querySelector(".input-search").value,
     token: document.querySelector(".input-token").value,
-    reto: document.querySelector(".input-challenge").value === 0 ? "RETO1" : "RETO2"
+    reto: document.querySelector(".input-challenge").value == 0 ? "RETO1" : "RETO2"
   }
   const headers_ = {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
     'Access-Control-Allow-Origin': 'http://localhost:5173/',
-    'mode': 'cors',
+    'mode': 'no-cors',
     'Access-Control-Allow-Credentials': 'true',
   }
 
   const requestOptions = {
     method: 'POST',
-    mode: 'no-cors',
+
     headers: headers_,
     body: JSON.stringify(data)
   }
 
   fetch('http://localhost:8080/data', requestOptions)
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.text())
+    .then((data) => {
       console.log(requestOptions.body)
       console.log(data)
       document.querySelector(".code").innerHTML = "Código Hash: " + data;
